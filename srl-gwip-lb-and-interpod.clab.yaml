@@ -1,0 +1,226 @@
+name: srl-gwip-lb-and-interpod
+prefix: ""
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      image: srlinux:latest
+      #startup-config: configs/__clabNodeName__.cli
+      license: ./license.txt
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+      binds:
+        - base-configs:/base-configs
+  nodes:
+    #spine nodes
+    spine1:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "545"
+        graph-posY: "315"
+        graph-groupLabelPos: bottom-center
+    spine2:
+      #type: ixrd3l
+      type: ixrx3b            
+      labels:
+        graph-posX: "685"
+        graph-posY: "315"
+        graph-groupLabelPos: bottom-center
+    spine3:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "615"
+        graph-posY: "175"
+        graph-groupLabelPos: bottom-center
+    #leaf nodes
+    leaf1:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "355"
+        graph-posY: "435"
+        graph-groupLabelPos: bottom-center
+    leaf2:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "415"
+        graph-posY: "445"
+        graph-groupLabelPos: bottom-center
+    leaf3:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "595"
+        graph-posY: "435"
+        graph-groupLabelPos: bottom-center
+    leaf4:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "665"
+        graph-posY: "435"
+        graph-groupLabelPos: bottom-center
+    leaf5:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "765"
+        graph-posY: "435"
+        graph-groupLabelPos: bottom-center
+    leaf6:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "825"
+        graph-posY: "435"
+        graph-groupLabelPos: bottom-center
+    leaf7:
+      #type: ixrd3l
+      type: ixrx3b
+      labels:
+        graph-posX: "615"
+        graph-posY: "105"
+        graph-groupLabelPos: bottom-center
+    #switch nodes
+    sw12:
+      type: ixrd3l
+      labels:
+        graph-posX: "385"
+        graph-posY: "525"
+        graph-groupLabelPos: bottom-center
+    sw34:
+      type: ixrd3l
+      labels:
+        graph-posX: "635"
+        graph-posY: "515"
+        graph-groupLabelPos: bottom-center
+    sw56:
+      type: ixrd3l
+      labels:
+        graph-posX: "805"
+        graph-posY: "525"
+        graph-groupLabelPos: bottom-center
+    #controller nodes
+    s121:
+      type: ixrd3l
+      labels:
+        graph-posX: "285"
+        graph-posY: "605"
+        graph-groupLabelPos: bottom-center
+    s122:
+      type: ixrd3l
+      labels:
+        graph-posX: "335"
+        graph-posY: "605"
+        graph-groupLabelPos: bottom-center
+    s123:
+      type: ixrd3l
+      labels:
+        graph-posX: "395"
+        graph-posY: "605"
+        graph-groupLabelPos: bottom-center
+    s124:
+      type: ixrd3l
+      labels:
+        graph-posX: "445"
+        graph-posY: "605"
+        graph-groupLabelPos: bottom-center
+    #server nodes
+    s341:
+      kind: linux
+      exec:
+        - bash base-configs/s341.sh
+      labels:
+        graph-posX: "595"
+        graph-posY: "575"
+        graph-groupLabelPos: bottom-center
+    s342:
+      kind: linux
+      exec:
+        - bash base-configs/s342.sh
+      labels:
+        graph-posX: "685"
+        graph-posY: "575"
+        graph-groupLabelPos: bottom-center
+    s561:
+      kind: linux
+      exec:
+        - bash base-configs/s561.sh
+      labels:
+        graph-posX: "805"
+        graph-posY: "605"
+        graph-groupLabelPos: bottom-center
+    s61:
+      kind: linux
+      exec:
+        - bash base-configs/s61.sh
+      labels:
+        graph-posX: "885"
+        graph-posY: "525"
+        graph-groupLabelPos: bottom-center
+    s62:
+      kind: linux
+      exec:
+        - bash base-configs/s62.sh
+      labels:
+        graph-posX: "955"
+        graph-posY: "435"
+        graph-groupLabelPos: bottom-center
+    s71:
+      kind: linux
+      exec:
+        - bash base-configs/s71.sh
+      labels:
+        graph-posX: "615"
+        graph-posY: "15"
+        graph-groupLabelPos: bottom-center
+  links:
+    # leaf-spine links POD1
+    - endpoints: [ "leaf1:e1-1", "spine1:e1-1" ]
+    - endpoints: [ "leaf1:e1-2", "spine2:e1-1" ]
+    - endpoints: [ "leaf2:e1-1", "spine1:e1-2" ]
+    - endpoints: [ "leaf2:e1-2", "spine2:e1-2" ]
+    - endpoints: [ "leaf3:e1-1", "spine1:e1-3" ]
+    - endpoints: [ "leaf3:e1-2", "spine2:e1-3" ]
+    - endpoints: [ "leaf4:e1-1", "spine1:e1-4" ]
+    - endpoints: [ "leaf4:e1-2", "spine2:e1-4" ]
+    - endpoints: [ "leaf5:e1-1", "spine1:e1-5" ]
+    - endpoints: [ "leaf5:e1-2", "spine2:e1-5" ]
+    - endpoints: [ "leaf6:e1-1", "spine1:e1-6" ]
+    - endpoints: [ "leaf6:e1-2", "spine2:e1-6" ]
+
+    # switch-facing links POD1
+    - endpoints: [ "leaf1:e1-3", "sw12:e1-1" ]
+    - endpoints: [ "leaf2:e1-3", "sw12:e1-2" ]
+    - endpoints: [ "leaf3:e1-3", "sw34:e1-1" ]
+    - endpoints: [ "leaf4:e1-3", "sw34:e1-2" ]
+    - endpoints: [ "leaf5:e1-3", "sw56:e1-1" ]
+    - endpoints: [ "leaf6:e1-3", "sw56:e1-2" ]
+
+    # server-facing links POD1
+    - endpoints: [ "sw12:e1-3", "s121:e1-1" ]
+    - endpoints: [ "sw12:e1-4", "s122:e1-1" ]
+    - endpoints: [ "sw12:e1-5", "s123:e1-1" ]
+    - endpoints: [ "sw12:e1-6", "s124:e1-1" ]
+
+    - endpoints: [ "sw34:e1-3", "s341:eth1" ]
+    - endpoints: [ "sw34:e1-4", "s342:eth1" ]
+
+    - endpoints: [ "sw56:e1-3", "s561:eth1" ]
+
+    - endpoints: [ "leaf6:e1-4", "s61:eth1" ]
+    - endpoints: [ "leaf6:e1-5", "s62:eth1" ]
+
+    # inter-pod links
+    - endpoints: [ "spine1:e1-7", "spine3:e1-1" ]
+    - endpoints: [ "spine2:e1-7", "spine3:e1-2" ]
+
+    # leaf-spine links POD2
+    - endpoints: [ "spine3:e1-3", "leaf7:e1-1" ]
+
+    # server-facing links POD2
+    - endpoints: [ "leaf7:e1-2", "s71:eth1" ]

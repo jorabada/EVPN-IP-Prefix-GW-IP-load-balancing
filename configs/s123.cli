@@ -1,0 +1,52 @@
+set / interface ethernet-1/1 admin-state enable
+set / interface ethernet-1/1 vlan-tagging true
+set / interface ethernet-1/1 subinterface 1 type routed
+set / interface ethernet-1/1 subinterface 1 ipv4 admin-state enable
+set / interface ethernet-1/1 subinterface 1 ipv4 address 10.0.0.123/24 primary
+set / interface ethernet-1/1 subinterface 1 vlan encap single-tagged vlan-id 1
+set / interface lo0 subinterface 0 ipv4 admin-state enable
+set / interface lo0 subinterface 0 ipv4 address 99.99.99.123/24 primary
+
+set / network-instance ip-vrf-1 type ip-vrf
+set / network-instance ip-vrf-1 interface ethernet-1/1.1
+set / network-instance ip-vrf-1 interface lo0.0
+set / network-instance ip-vrf-1 protocols bgp admin-state enable
+set / network-instance ip-vrf-1 protocols bgp autonomous-system 65123
+set / network-instance ip-vrf-1 protocols bgp router-id 10.0.0.123
+set / network-instance ip-vrf-1 protocols bgp ebgp-default-policy import-reject-all false
+set / network-instance ip-vrf-1 protocols bgp ebgp-default-policy export-reject-all false
+set / network-instance ip-vrf-1 protocols bgp afi-safi ipv4-unicast admin-state enable
+set / network-instance ip-vrf-1 protocols bgp afi-safi ipv4-unicast multipath allow-multiple-as true
+set / network-instance ip-vrf-1 protocols bgp afi-safi ipv4-unicast multipath ebgp maximum-paths 64
+set / network-instance ip-vrf-1 protocols bgp afi-safi ipv4-unicast multipath ibgp maximum-paths 64
+set / network-instance ip-vrf-1 protocols bgp route-advertisement rapid-withdrawal true
+set / network-instance ip-vrf-1 protocols bgp trace-options flag events modifier detail
+set / network-instance ip-vrf-1 protocols bgp trace-options flag packets modifier detail
+set / network-instance ip-vrf-1 protocols bgp trace-options flag open modifier detail
+set / network-instance ip-vrf-1 protocols bgp trace-options flag notification modifier detail
+set / network-instance ip-vrf-1 protocols bgp trace-options flag socket modifier detail
+set / network-instance ip-vrf-1 protocols bgp trace-options flag update modifier detail
+set / network-instance ip-vrf-1 protocols bgp group pe-ce admin-state enable
+set / network-instance ip-vrf-1 protocols bgp group pe-ce export-policy [ export-VIP ]
+set / network-instance ip-vrf-1 protocols bgp group pe-ce afi-safi ipv4-unicast admin-state enable
+set / network-instance ip-vrf-1 protocols bgp neighbor 1.1.1.1 peer-as 65001
+set / network-instance ip-vrf-1 protocols bgp neighbor 1.1.1.1 peer-group pe-ce
+set / network-instance ip-vrf-1 protocols bgp neighbor 1.1.1.1 multihop admin-state enable
+set / network-instance ip-vrf-1 protocols bgp neighbor 1.1.1.1 multihop maximum-hops 10
+set / network-instance ip-vrf-1 protocols bgp neighbor 1.1.1.1 transport local-address 10.0.0.123
+set / network-instance ip-vrf-1 protocols bgp neighbor 2.2.2.2 peer-as 65002
+set / network-instance ip-vrf-1 protocols bgp neighbor 2.2.2.2 peer-group pe-ce
+set / network-instance ip-vrf-1 protocols bgp neighbor 2.2.2.2 multihop admin-state enable
+set / network-instance ip-vrf-1 protocols bgp neighbor 2.2.2.2 multihop maximum-hops 10
+set / network-instance ip-vrf-1 protocols bgp neighbor 2.2.2.2 transport local-address 10.0.0.123
+set / network-instance ip-vrf-1 static-routes admin-state enable
+set / network-instance ip-vrf-1 static-routes route 0.0.0.0/0 admin-state enable
+set / network-instance ip-vrf-1 static-routes route 0.0.0.0/0 next-hop-group nhg1
+set / network-instance ip-vrf-1 next-hop-groups group nhg1 admin-state enable
+set / network-instance ip-vrf-1 next-hop-groups group nhg1 nexthop 1 ip-address 10.0.0.254
+set / network-instance ip-vrf-1 next-hop-groups group nhg1 nexthop 1 admin-state enable
+
+set / routing-policy prefix-set VIP-99.99.99.0 prefix 99.99.99.0/24 mask-length-range 24..24
+set / routing-policy policy export-VIP statement 10 match prefix prefix-set VIP-99.99.99.0
+set / routing-policy policy export-VIP statement 10 action policy-result accept
+set / routing-policy policy export-VIP statement 10 action bgp next-hop set 10.0.56.1
