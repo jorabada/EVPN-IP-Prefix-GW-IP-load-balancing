@@ -1,6 +1,8 @@
 # IP Prefix route GW-IP load balancing and EVPN-IFL vxlan interdomain
 
+The test bed used in this lab is illustrated below.
 
+![](srl-gwip-lb-and-interpod.clab.png)
 
 This lab demonstrates:
 - IP prefix route GW-IP load balancing
@@ -70,5 +72,3 @@ The following alias is used to display traces:
 environment alias display-trace "bash viewlog -f /var/log/srlinux/debug/trace_events_other.log -t -e {}"
 ```
 
-
-![](3-stage-clos.clab.drawio.png)
