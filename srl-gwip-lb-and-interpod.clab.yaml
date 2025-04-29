@@ -15,72 +15,72 @@ topology:
   nodes:
     #spine nodes
     spine1:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "545"
         graph-posY: "315"
         graph-groupLabelPos: bottom-center
     spine2:
-      #type: ixrd3l
-      type: ixrx3b            
+      type: ixrd3l
+      #type: ixrx3b            
       labels:
         graph-posX: "685"
         graph-posY: "315"
         graph-groupLabelPos: bottom-center
     spine3:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "615"
         graph-posY: "175"
         graph-groupLabelPos: bottom-center
     #leaf nodes
     leaf1:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "355"
         graph-posY: "435"
         graph-groupLabelPos: bottom-center
     leaf2:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "415"
         graph-posY: "445"
         graph-groupLabelPos: bottom-center
     leaf3:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "595"
         graph-posY: "435"
         graph-groupLabelPos: bottom-center
     leaf4:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "665"
         graph-posY: "435"
         graph-groupLabelPos: bottom-center
     leaf5:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "765"
         graph-posY: "435"
         graph-groupLabelPos: bottom-center
     leaf6:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "825"
         graph-posY: "435"
         graph-groupLabelPos: bottom-center
     leaf7:
-      #type: ixrd3l
-      type: ixrx3b
+      type: ixrd3l
+      #type: ixrx3b
       labels:
         graph-posX: "615"
         graph-posY: "105"
